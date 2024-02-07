@@ -1,0 +1,26 @@
+Creating Docker Image-win Asp.net for Version 3.1 
+Enable  Hyper-V :-
+Run this Cmd in PowerShell
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All 
+Install Docker Desktop
+note:-don't install the WSL2 at the time of installing docker desktop
+at the time of installation switch to windows container
+
+install Asp.net 3.1 SDK file from official website:-
+ https://dotnet.microsoft.com/en-us/download/dotnet/3.1
+
+
+after installtion create a folder and open that folder in CMD promt
+after that Run the below command it will create a Asp.net project:
+`dotnet new webapi -o HelloAspNetCore`
+
+install VScode
+ open Asp.net project in VScode
+ VScode will add a sample project file name : WeatherForcast
+install Docker in the VScode
+goto view section --> click on command pallet --> search for `Dockerfile:Add docker files to workspace`
+-->select Asp.net -->select OS(Windows)-->Add port number-->Enter 
+now the Dockerfile will be created automatically for the project
+build the Docker image which was created
+Run the built Docker Image using Docker run Command
+
