@@ -17,13 +17,15 @@ jobs:
 
       - name: Check commit details
         id: check_commit
-        run: $(git log -1 --pretty=format:'%an')
-          echo "::set-output name=COMMIT_USER"
-          
+        run: echo "::set-output name=COMMIT_USER::$(git log -1 --pretty=format:'%an')"
+        
+      - name: Check if auto-merge
+        id: check_auto_merge
+        run: echo "::set-output name=AUTO_MERGE::$(if [ -n "${{ github.event.before }}" ]; then echo true; else echo false; fi)"
+
       - name: Set env to dev
-        if: endsWith(github.ref, '/dev')
-        run: |
-          echo "::set-env name=ENVIRONMENT::dev"
+        if: ${{ steps.check_auto_merge.outputs.AUTO_MERGE == 'true' }}
+        run: echo "::set-env name=ENVIRONMENT::dev"
         
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
