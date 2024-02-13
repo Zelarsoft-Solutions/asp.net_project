@@ -27,6 +27,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: harish0717/helloaspnetcore:v1
+          tags: bhargav809/dotnet-poc:dotnet
     
   
