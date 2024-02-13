@@ -19,8 +19,8 @@ jobs:
         id: check_commit
         run: echo "::set-output name=COMMIT_USER::$(git log -1 --pretty=format:'%an')"
         
-      - name: Set env to dev and run only for automated commits
-        if: ${{ steps.check_commit.outputs.COMMIT_USER == 'YourAutomatedUser' }}
+      - name: Set env to dev
+        if: endsWith(github.ref, '/dev')
         run: |
           echo "::set-env name=ENVIRONMENT::dev"
         
