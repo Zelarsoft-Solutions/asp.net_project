@@ -15,10 +15,9 @@ jobs:
       
     steps:
 
-     - name: check commit details
-         id:  check_commit
-        run: COMMIT_USER::$(git log -1 --pretty=format:'%an')"
-          echo "Commit author: $COMMIT_USER"
+      - name: Check commit details
+        id: check_commit
+        run: echo "::set-output name=COMMIT_USER::$(git log -1 --pretty=format:'%an')"
         
       - name: Set env to dev and run only for automated commits
         if: ${{ steps.check_commit.outputs.COMMIT_USER == 'YourAutomatedUser' }}
