@@ -21,9 +21,10 @@ jobs:
          COMMIT_USER=$(git log -1 --pretty=format:'%an')
          echo "COMMIT_USER=$COMMIT_USER" >> $GITHUB_ENV
         
-      - name: Check if auto-merge
-        id: check_auto_merge
-        run: echo "::set-output name=AUTO_MERGE::$(if [ -n "${{ github.event.before }}" ]; then echo true; else echo false; fi)"
+      - name: Set env to dev and run only for automated commits
+        if: ${{ steps.check_commit.outputs.COMMIT_USER == 'YourAutomatedUser' }}
+        run: |
+          echo "::set-env name=ENVIRONMENT::dev"
 
       - name: Set env to dev
         if: ${{ steps.check_auto_merge.outputs.AUTO_MERGE == 'true' }}
