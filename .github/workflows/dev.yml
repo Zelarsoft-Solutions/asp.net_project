@@ -28,7 +28,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.100'  # Adjust the .NET Core version as needed
+          dotnet-version: '6.0.100'  
 
       - name: Restore NuGet packages
         run: dotnet restore
