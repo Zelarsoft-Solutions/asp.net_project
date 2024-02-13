@@ -15,9 +15,11 @@ jobs:
       
     steps:
 
-      - name: Check commit details
-        id: check_commit
-        run: echo "::set-output name=COMMIT_USER::$(git log -1 --pretty=format:'%an')"
+      - name: Set Commit User
+        id: set_commit_user
+        run: |
+         COMMIT_USER=$(git log -1 --pretty=format:'%an')
+         echo "COMMIT_USER=$COMMIT_USER" >> $GITHUB_ENV
         
       - name: Check if auto-merge
         id: check_auto_merge
