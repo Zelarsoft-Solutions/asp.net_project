@@ -1,12 +1,44 @@
-name: ci
+name: Auto Merge and Run Pipeline
+
 on:
   push:
     branches:
       - 'dev'
+
 jobs:
+  auto_merge_and_pipeline:
+    runs-on: windows-latest
+
+    env:
+      CI: true
+      ENVIRONMENT: dev
+      
+    steps:
+
+     - name: check commit details
+        id: check_commit
+        run: echo "::set-output name=COMMIT_USER::$(git log -1 --pretty=format:'%an')"
+        
+      - name: Set env to dev and run only for automated commits
+        if: ${{ steps.check_commit.outputs.COMMIT_USER == 'YourAutomatedUser' }}
+        run: |
+          echo "::set-env name=ENVIRONMENT::dev"
+        
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.100'  # Adjust the .NET Core version as needed
+
+      - name: Restore NuGet packages
+        run: dotnet restore
+
+      - name: Build .NET application
+        run: dotnet build
+    
   docker:
     runs-on: ubuntu-latest
-    steps:
+  steps:
+      
       - name: Checkout
         uses: actions/checkout@v2
         
