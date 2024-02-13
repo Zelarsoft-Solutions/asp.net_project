@@ -16,7 +16,7 @@ jobs:
     steps:
 
      - name: check commit details
-        id: check commit
+        id: check_commit
         run: COMMIT_USER::$(git log -1 --pretty=format:'%an')"
           echo "Commit author: $COMMIT_USER"
         
