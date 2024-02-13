@@ -35,10 +35,6 @@ jobs:
       - name: Build .NET application
         run: dotnet build
     
-  docker:
-    runs-on: ubuntu-latest
-  steps:
-      
       - name: Checkout
         uses: actions/checkout@v2
         
