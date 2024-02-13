@@ -1,66 +1,70 @@
-name: Auto Merge and Run Pipeline
+name: Build and Deploy
 
 on:
   push:
     branches:
-      - 'dev'
+      - main
 
 jobs:
-  auto_merge_and_pipeline:
-    runs-on: windows-latest
-
-    env:
-      CI: true
-      ENVIRONMENT: dev
-      
+  build:
+    runs-on: ubuntu-latest
+    
     steps:
+
+      - name: Set up environment
+        run: echo "MY_OUTPUT=dev" >> $GITHUB_ENV
 
       - name: Set Commit User
         id: set_commit_user
         run: |
-         COMMIT_USER=$(git log -1 --pretty=format:'%an')
-         echo "COMMIT_USER=$COMMIT_USER" >> $GITHUB_ENV
-        
-      - name: Set env to dev and run only for automated commits
-        if: ${{ steps.check_commit.outputs.COMMIT_USER == 'YourAutomatedUser' }}
-        run: |
-          echo "::set-env name=ENVIRONMENT::dev"
+          COMMIT_USER=$(git log -1 --pretty=format:'%an')
+          echo "COMMIT_USER=$COMMIT_USER" >> $GITHUB_ENV
 
-      - name: Set env to dev
+      - name: Check Automated Commit
+        id: check_commit
+        run: echo "AUTO_COMMIT=$(if [ $COMMIT_USER == 'YourAutomatedUser' ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_ENV
+
+      - name: Set env to dev for automated commits
+        if: ${{ steps.check_commit.outputs.AUTO_COMMIT == 'true' }}
+        run: echo "::set-env name=ENVIRONMENT::dev"
+
+      - name: Check Auto Merge
+        id: check_auto_merge
+        run: echo "AUTO_MERGE=$(if [ "${{ github.event_name }}" == 'pull_request' && "${{ github.event.action }}" == 'closed' ]; then echo 'true'; else echo 'false'; fi)" >> $GITHUB_ENV
+
+      - name: Set env to dev for auto merge
         if: ${{ steps.check_auto_merge.outputs.AUTO_MERGE == 'true' }}
         run: echo "::set-env name=ENVIRONMENT::dev"
-        
+
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '6.0.100'  
+          dotnet-version: '6.0.100'
 
       - name: Restore NuGet packages
         run: dotnet restore
 
       - name: Build .NET application
         run: dotnet build
-    
+
       - name: Checkout
         uses: actions/checkout@v2
-        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-        
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-        
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: harish0717/helloaspnetcore:v1
-    
-  
