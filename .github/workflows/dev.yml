@@ -7,6 +7,7 @@ on:
 env:
       CI: true
       ENVIRONMENT: dev
+     
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -37,6 +38,7 @@ jobs:
         if: endsWith(github.ref, '/dev')
         run: |
           echo "::set-env name=ENVIRONMENT::dev"
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
       - name: Set env to staging
         if: endsWith(github.ref, '/dev')
