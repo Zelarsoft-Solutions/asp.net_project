@@ -37,3 +37,13 @@ jobs:
         if: endsWith(github.ref, '/dev')
         run: |
           echo "::set-env name=ENVIRONMENT::dev"
+
+      - name: Set env to staging
+        if: endsWith(github.ref, '/dev')
+        run: |
+          echo "::set-env name=ENVIRONMENT::staging"
+          
+      - name: Set env to production
+        if: endsWith(github.ref, '/dev')
+        run: |
+          echo "::set-env name=ENVIRONMENT::production"
