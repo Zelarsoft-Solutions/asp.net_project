@@ -17,8 +17,9 @@ jobs:
 
       - name: Check commit details
         id: check_commit
-        run: echo "::set-output name=COMMIT_USER::$(git log -1 --pretty=format:'%an')"
-        
+        run: $(git log -1 --pretty=format:'%an')
+          echo "::set-output name=COMMIT_USER"
+          
       - name: Set env to dev
         if: endsWith(github.ref, '/dev')
         run: |
