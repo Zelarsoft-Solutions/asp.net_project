@@ -1,12 +1,12 @@
-name: ci
+xname: ci
 
 on:
   push:
     branches:
       - 'dev' # Add the develop branch to trigger the workflow
-env:
-      CI: True
-      ENVIRONMENT: dev
+# env:
+#       CI: True
+#       ENVIRONMENT: dev
      
 jobs:
   docker:
@@ -37,8 +37,10 @@ jobs:
       - name: Set env to dev
         if: endsWith(github.ref, '/dev')
         run: |
-          echo "::set-env name=ENVIRONMENT::dev"
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+          # echo "::set-env name=ENVIRONMENT::dev"
+          # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+          env:
+          NAME: 'demo'
 
       - name: Set env to staging
         if: endsWith(github.ref, '/dev')
