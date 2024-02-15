@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: dev
-      url: 'http://dev.myapp.com'
+     
     steps:
       - name: dev
         run: echo I am Deploying!
