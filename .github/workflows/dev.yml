@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
       
       - name: Setup .NET
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '3.1'  # Adjust to the version you need
 
@@ -26,16 +26,16 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-  deploydev:
-    name: Deploy to Dev
+  deploysraging:
+    name: Deploy to Staging
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment: 
-      name: deployment
+      name: Stanging
       url: 'http://dev.myapp.com'
     steps:
-      - name: Deploy
+      - name: Staging
         run: echo I am Deploying!
         
       - name: Set up QEMU
