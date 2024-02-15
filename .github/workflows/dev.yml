@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - 'dev' # Add the develop branch to trigger the workflow
-env:
-       CI: True
-       ENVIRONMENT: dev
+#env:
+       #CI: True
+       #ENVIRONMENT: dev
      
 jobs:
   docker:
