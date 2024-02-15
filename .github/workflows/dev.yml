@@ -33,9 +33,9 @@ jobs:
      # - name: Build
       #  run: dotnet build --configuration Release 
       
-    steps:
-      - name: Deploy
-        run: echo I am Deploying!
+   # steps:
+    #  - name: Deploy
+     #   run: echo I am Deploying!
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
