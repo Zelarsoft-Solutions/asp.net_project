@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-  deploysraging:
+  deploystaging:
     name: Deploy to Staging
     if: github.event_name == 'pull_request'
     needs: build
