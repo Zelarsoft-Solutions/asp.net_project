@@ -26,16 +26,16 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
-  deploystaging:
-    name: Deploy to Staging
+  deploydev:
+    name: Deploy to dev
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment: 
-      name: Stanging
+      name: dev
       url: 'http://dev.myapp.com'
     steps:
-      - name: Staging
+      - name: dev
         run: echo I am Deploying!
         
       - name: Set up QEMU
