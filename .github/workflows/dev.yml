@@ -3,9 +3,9 @@ name: ci
 on:
   push:
     branches: [dev]
-  pull_request:  # Fixed typo in pull_request
+  pull_request:  
     branches: [dev]
-  workflow_dispatch:  # Fixed typo in workflow_dispatch
+  workflow_dispatch:  
   
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v7
         with:
-          dotnet-version: '3.1'  # Adjust to the version you need
+          dotnet-version: '3.1'  
 
       - name: Restore Dependencies
         run: dotnet restore
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: deployment
-      url: 'http://dev.myapp.com'
+      
     steps:
       - name: Deploy
         run: echo I am Deploying!
