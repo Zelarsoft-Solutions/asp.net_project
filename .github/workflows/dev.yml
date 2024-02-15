@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - 'dev' # Add the develop branch to trigger the workflow
-# env:
-#       CI: True
-#       ENVIRONMENT: dev
+env:
+       CI: True
+       ENVIRONMENT: dev
      
 jobs:
   docker:
@@ -33,21 +33,27 @@ jobs:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
+    
+      - name: Deploy to Dev
+        if: github.event_name == 'pull_request'
+        needs: [Build]
+        runs-on: ubuntu-latest
+        environment: 
+          name: Deployment
+          url: 'http://dev.myapp.com'
+        steps:
+         - name: Deploy
+           run: echo This is Deployment!
 
-      - name: Set env to dev
-        if: endsWith(github.ref, '/dev')
-        run: |
-          # echo "::set-env name=ENVIRONMENT::dev"
-          # ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-          env:
-          NAME: 'demo'
-
-      - name: Set env to staging
-        if: endsWith(github.ref, '/dev')
-        run: |
-          echo "::set-env name=ENVIRONMENT::staging"
+      - name: Deploy to Staging
+        if: github.event_name == 'refs/heads/dev'
+        needs: [Build]
+        runs-on: ubuntu-latest
+        environment: 
+          name: Staging
+          url: 'http://test.myapp.com'
+        steps:
+         - name: Stage
+           run: echo This is Staging!
           
-      - name: Set env to production
-        if: endsWith(github.ref, '/dev')
-        run: |
-          echo "::set-env name=ENVIRONMENT::production"
+     
