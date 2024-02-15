@@ -2,23 +2,41 @@ name: ci
 
 on:
   push:
-    branches:
-      - 'dev' # Add the develop branch to trigger the workflow
-#env:
-       #CI: True
-       #ENVIRONMENT: dev
-     
+    branches: [dev]
+  pull_request:  # Fixed typo in pull_request
+    branches: [dev]
+  workflow_dispatch:  # Fixed typo in workflow_dispatch
+  
 jobs:
-  docker:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
     steps:
-
-      - name: Deploy to Dev
-        if: github.event_name == 'pull_request'
-        
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v2
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v7
+        with:
+          dotnet-version: '3.1'  # Adjust to the version you need
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+  deploydev:
+    name: Deploy to Dev
+    if: github.event_name == 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment: 
+      name: deployment
+      url: 'http://dev.myapp.com'
+    steps:
+      - name: Deploy
+        run: echo I am Deploying!
         
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -31,17 +49,10 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
       
-          
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
-    
-      
-
-      
-     
