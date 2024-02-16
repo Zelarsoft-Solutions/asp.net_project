@@ -3,7 +3,7 @@ on:
   push:
     branches: [dev]
   pull_request:  # Fixed typo in pull_request
-    branches: [dev]
+    branches: [prod]
   workflow_dispatch:  # Fixed typo in workflow_dispatch
   
 jobs:
@@ -34,8 +34,8 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1  
 
-  deploydev:
-    name: Deploy to dev
+  deployprod:
+    name: Deploy to prod
     if: github.event_name == 'pull_request'
     #needs: build
     runs-on: ubuntu-latest
