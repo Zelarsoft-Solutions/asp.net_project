@@ -6,7 +6,7 @@ on:
       - dev
   pull_request:
     branches:
-      - dev
+      - prod
   workflow_dispatch:
 
 jobs:
@@ -42,7 +42,7 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.head.ref == 'dev' && github.event.pull_request.base.ref == 'prod'
     runs-on: ubuntu-latest
     environment: 
-      name: prod
+      name: dev
      
     steps:
       - name: Login to DockerHub
