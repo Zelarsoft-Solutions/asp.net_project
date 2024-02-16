@@ -1,9 +1,9 @@
 name: ci
 on:
   push:
-    branches: [dev-deploy]
+    branches: [dev]
   pull_request:  # Fixed typo in pull_request
-    branches: [dev-deploy]
+    branches: [dev]
   workflow_dispatch:  # Fixed typo in workflow_dispatch
   
 jobs:
@@ -25,7 +25,7 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
         
-      - name: dev-deploy
+      - name: dev
         run: echo Rini is Deploying!
         
       - name: Set up QEMU
@@ -35,7 +35,7 @@ jobs:
         uses: docker/setup-buildx-action@v1  
 
   deploydev:
-    name: Deploy to dev-deploy
+    name: Deploy to dev
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
