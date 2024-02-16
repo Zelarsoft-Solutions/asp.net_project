@@ -2,7 +2,7 @@ name: ci
 
 on:
   push:
-    branches: [staging]
+    branches: [dev]
   pull_request:  # Fixed typo in pull_request
     branches: [dev]
   workflow_dispatch:  # Fixed typo in workflow_dispatch
@@ -37,8 +37,6 @@ jobs:
       - name: dev
         run: echo I am Deploying!
 
-    
-   
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         
