@@ -24,9 +24,6 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
         
-      - name: dev
-        run: echo Rini is Deploying!
-        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         
