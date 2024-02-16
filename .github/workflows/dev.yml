@@ -6,7 +6,7 @@ on:
       - dev
   pull_request:
     branches:
-      - prod
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
 
   deployprod:
     name: Deploy to prod
-    if: github.event_name == 'pull_request' && github.event.action == 'opened'  # Only run on pull request opened
+    if: github.event_name == 'pull_request' && github.event.action == 'opened' && github.event.pull_request.head.ref == 'dev' && github.event.pull_request.base.ref == 'prod'
     runs-on: ubuntu-latest
     environment: 
       name: prod
@@ -57,4 +57,3 @@ jobs:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
-
