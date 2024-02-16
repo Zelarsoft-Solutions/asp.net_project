@@ -12,12 +12,11 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v2
-      
+
       - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '3.1'
 
@@ -28,7 +27,7 @@ jobs:
         run: dotnet build --configuration Release
 
       - name: dev
-        run: echo " Iam Deploying!"
+        run: echo Rini is Deploying!
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -39,27 +38,25 @@ jobs:
   deploydev:
     name: Deploy to dev
     if: github.event_name == 'pull_request'
-    needs: build
+    needs: [build]
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: dev
     steps:
-      - name: Deploy to dev
-        run: echo "I am deploying!"
+      - name: dev
+        run: echo I am deploying to dev branch!
 
   deploystaging:
     name: Deploy to staging
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/staging'
+    needs: [build]
     runs-on: ubuntu-latest
-    environment: 
+    environment:
       name: staging
-      
     steps:
-      - name: Deploy to staging
-        run: echo "I am deploying!"     
+      - name: deploy
+        run: echo I am deploying to staging branch!
 
-  
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
