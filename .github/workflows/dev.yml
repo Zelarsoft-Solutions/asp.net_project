@@ -9,8 +9,12 @@ on:
 
 jobs:
   build:
-    name: build
     runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v2
+
+     - name: Compile
+       run: Windows
 
   deploydev:
     name: Deploy to dev
