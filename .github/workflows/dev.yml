@@ -1,11 +1,14 @@
 name: ci
+
 on:
   push:
-    branches: [dev]
-  pull_request:  # Fixed typo in pull_request
-    branches: [prod]
-  workflow_dispatch:  # Fixed typo in workflow_dispatch
-  
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - prod
+  workflow_dispatch:
+
 jobs:
   build:
     name: Build
@@ -36,14 +39,12 @@ jobs:
 
   deployprod:
     name: Deploy to prod
-    if: github.event_name == 'pull_request'
-    #needs: build
+    if: github.event_name == 'pull_request' && github.event.action == 'opened'  # Only run on pull request opened
     runs-on: ubuntu-latest
     environment: 
-      name: dev
+      name: prod
      
     steps:
-        
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -56,3 +57,4 @@ jobs:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
+
