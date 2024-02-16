@@ -4,16 +4,18 @@ on:
     branches: [dev]
   pull_request:  # Fixed typo in pull_request
     branches: [dev]
-  workflow_dispatch:  # Fixed typo in workflow_dispatch
+  workflow_dispatch:  # Fixed typo in workflow_dispatch 
+
+jobs:
+  
   deploydev:
     name: Deploy to dev
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment: 
-      name: dev  
-
-jobs:
+      name: dev 
+  
   build:
     name: Build
     runs-on: ubuntu-latest
