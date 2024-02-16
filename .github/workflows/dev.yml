@@ -8,14 +8,6 @@ on:
 
 jobs:
   
-  deploydev:
-    name: Deploy to dev
-    if: github.event_name == 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-    environment: 
-      name: dev 
-  
   build:
     name: Build
     runs-on: ubuntu-latest
