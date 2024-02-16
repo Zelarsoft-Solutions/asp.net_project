@@ -1,12 +1,12 @@
 name: ci
 on:
   push:
-    branches: [dev-deploy]
+    branches: [dev]
   pull_request:  # Fixed typo in pull_request
-    branches: [dev-deploy]
+    branches: [dev]
   workflow_dispatch:  # Fixed typo in workflow_dispatch
   deploydev:
-    name: Deploy to dev-deploy
+    name: Deploy to dev
     if: github.event_name == 'pull_request'
     needs: build
     runs-on: ubuntu-latest
