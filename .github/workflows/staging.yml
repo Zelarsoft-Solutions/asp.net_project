@@ -1,6 +1,6 @@
-name: ci-cd
+name: ci
 on:
-  workflow_dispatch:
+workflow_dispatch:
   push:
     branches:
       - 'staging'
@@ -29,5 +29,30 @@ jobs:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
+name: cd
+on:
+  workflow_run:
+    workflows: ["ci"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to Server
+        run: |
+          ssh user@54.163.139.35 'docker pull bhargav809/dotnet-poc:dotnet'
+          ssh user@54.163.139.35 'docker run -d --name testing -p 80:80 bhargav809/dotnet-poc:dotnet'
+         
     
   
