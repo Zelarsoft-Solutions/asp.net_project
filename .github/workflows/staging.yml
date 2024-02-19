@@ -1,6 +1,6 @@
 name: ci-cd
 on:
-  workflow_run:
+  workflow_dispatch:
   push:
     branches:
       - 'staging'
