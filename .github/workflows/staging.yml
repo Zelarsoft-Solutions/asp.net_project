@@ -41,5 +41,5 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh user@54.163.139.35 'docker pull bhargav809/dotnet-poc:dotnet'
-          ssh user@54.163.139.35 'docker run -d --name testing -p 80:80 bhargav809/dotnet-poc:dotnet'
+          ssh ubuntu@54.163.139.35 'docker pull bhargav809/dotnet-poc:dotnet'
+          ssh ubuntu@54.163.139.35 'docker run -d --name testing -p 80:80 bhargav809/dotnet-poc:dotnet'
