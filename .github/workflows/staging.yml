@@ -41,5 +41,5 @@ jobs:
 
       - name: Deploy to Server
         run: |
-          ssh ssh -i "websitw.pem" ubuntu@ec2-54-163-139-35.compute-1.amazonaws.com 'docker pull bhargav809/dotnet-poc:dotnet'
-          ssh ssh -i "websitw.pem" ubuntu@ec2-54-163-139-35.compute-1.amazonaws.com 'docker run -d --name testing -p 80:80 bhargav809/dotnet-poc:dotnet'
+          ssh ssh -i "${{ secrets.SSH_PRIVATE_KEY }}" ubuntu@ec2-54-163-139-35.compute-1.amazonaws.com 'docker pull bhargav809/dotnet-poc:dotnet'
+          ssh ssh -i "${{ secrets.SSH_PRIVATE_KEY }}" ubuntu@ec2-54-163-139-35.compute-1.amazonaws.com 'docker run -d --name testing -p 80:80 bhargav809/dotnet-poc:dotnet'
