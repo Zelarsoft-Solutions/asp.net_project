@@ -12,8 +12,8 @@ jobs:
     name: Build and Push
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
-    environment: 
-      name: testing
+    # environment: 
+    #   name: testing
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
