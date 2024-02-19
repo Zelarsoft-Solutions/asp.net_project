@@ -1,4 +1,4 @@
-name: ci
+name: ci-cd
 
 on:
   workflow_dispatch:
@@ -31,20 +31,6 @@ jobs:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
-
-name: cd
-
-on:
-  workflow_run:
-    workflows: ["ci"]
-    types:
-      - completed
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
