@@ -36,7 +36,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     environment: 
-      name: testing
+      name: staging
     steps: 
       - name: deploy
         run: echo "Rini is deploying to staging!"
