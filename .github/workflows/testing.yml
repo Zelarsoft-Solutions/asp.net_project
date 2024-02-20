@@ -40,7 +40,6 @@ jobs:
     steps: 
       - name: deploy
         run: echo "Rini is deploying to staging!"
-
   deployproduction:
     name: deploy to production
     if: github.event_name == 'push' && github.ref == 'refs/heads/production'
