@@ -30,7 +30,17 @@ jobs:
           context: .
           push: true
           tags: bhargav809/dotnet-poc:dotnet
-
+          
+  deploypstaging:
+    name: deploy to staging
+    if: github.event_name == 'pull_request'
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: 
+      name: testing
+    steps: 
+      - name: deploy
+        run: echo "Rini is deploying!"
   deployproduction:
     name: deploy to production
     if: github.event_name == 'push' && github.ref == 'refs/heads/production'
@@ -42,15 +52,6 @@ jobs:
       - name: deploy
         run: echo "Rini is deploying!"
 
-  deploypstaging:
-    name: deploy to staging
-    if: github.event_name == 'pull_request'
-    needs: [build]
-    runs-on: ubuntu-latest
-    environment: 
-      name: testing
-    steps: 
-      - name: deploy
-        run: echo "Rini is deploying!"
+  
 
   
