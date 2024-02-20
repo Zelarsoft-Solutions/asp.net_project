@@ -2,7 +2,7 @@ name: ci-testing
 
 on:
   push:
-    branches: [develop]
+    branches: [production]
   pull_request:  # Fixed typo in pull_request
     branches: [develop]
   
